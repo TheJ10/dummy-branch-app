@@ -68,8 +68,6 @@ Add the following entry to your hosts file:
 
 This allows accessing the API via [https://branchloans.com](https://branchloans.com).
 
----
-
 ### 3. Generate Self-Signed TLS Certificate (Local Only)
 Create a directory for certificates:
 ```bash
@@ -87,8 +85,6 @@ openssl req -x509 -nodes -days 365
 
 > **Note:** Browsers will show a warning for self-signed certificates. This is expected for local development.
 
----
-
 ### 4. Start the Application
 Build and start services with Docker Compose:
 ```bash
@@ -105,14 +101,10 @@ Verify containers:
 docker compose ps
 ```
 
----
-
 ### 5. Apply Database Migrations
 ```bash	
 docker compose exec api alembic upgrade head
 ```
-
----
 
 ### 6. Verify API Access
 
@@ -127,7 +119,7 @@ curl -k https://branchloans.com/api/loans
 
 ---
 
-### Environment Configuration
+## Environment Configuration
 The project supports multiple environments using environment variables.
 
 **Files:**
@@ -147,14 +139,14 @@ ENV_FILE=.env.dev docker compose up -d
 
 ---
 
-### Database Migrations & Seeding (Demo)
+## Database Migrations & Seeding (Demo)
 
-#### Migrations
+### Migrations
 ```bash
 docker compose exec api alembic upgrade head
 ```
 
-#### Seeding (Demo Only)
+### Seeding (Demo Only)
 Insert sample loan data:
 ```bash
 docker compose exec api python scripts/seed.py
@@ -165,7 +157,7 @@ docker compose exec api python scripts/seed.py
 
 ---
 
-### CI/CD Pipeline
+## CI/CD Pipeline
 Continuous integration and deployment are implemented using **GitHub Actions**.
 
 **Trigger conditions:**
@@ -185,7 +177,7 @@ Images are pushed only on successful pushes to main; pull requests do not publis
 
 ---
 
-### Security
+## Security
 - No secrets stored in code 
 - Uses GitHub-provided `GITHUB_TOKEN` 
 - Pipeline fails on **CRITICAL** vulnerabilities 
@@ -197,22 +189,21 @@ Images are pushed only on successful pushes to main; pull requests do not publis
 
 ---
 
-### Monitoring & Observability
-
--At this stage, observability is provided through application logs and container logs
+## Monitoring & Observability
+- At this stage, observability is provided through application logs and container logs
 available via Docker.
 
--In a production environment, this setup could be extended with centralized logging,
+- In a production environment, this setup could be extended with centralized logging,
 metrics collection, and alerting using tools such as Prometheus, Grafana, ELK stack,
 or cloud-native monitoring services.
 
--Health check endpoints (`/health`) are exposed to support uptime monitoring and
+- Health check endpoints (`/health`) are exposed to support uptime monitoring and
 service readiness checks.
 
 
 ---
 
-### Troubleshooting
+## Troubleshooting
 **Containers not running**
 ```bash
 docker compose ps
@@ -234,7 +225,7 @@ docker compose exec api alembic upgrade head
 
 ---
 
-### Design Decisions & Trade-offs
+## Design Decisions & Trade-offs
 
 **Docker & Docker Compose**
 - Simplifies setup and ensures portability.
@@ -254,7 +245,7 @@ docker compose exec api alembic upgrade head
 
 ---
 
-### Future Improvements
+## Future Improvements
 - Production TLS via managed certificates 
 - Centralized logging and metrics 
 - Kubernetes deployment 
@@ -262,7 +253,7 @@ docker compose exec api alembic upgrade head
 
 ---
 
-### Summary
+## Summary
 This project demonstrates:
 
 - **Production-ready containerization** 
@@ -270,7 +261,3 @@ This project demonstrates:
 - **Multi-environment configuration** 
 - **Automated CI/CD with security scanning** 
 - **Clear, reproducible documentation**
-
-
-
-
