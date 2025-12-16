@@ -9,6 +9,9 @@ jobs:
   build-test-scan-push:
     runs-on: ubuntu-latest
 
+    env:
+      IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/branch-loan-api
+
     permissions:
       contents: read
       packages: write
@@ -45,16 +48,16 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/branch-loan-api:${{ github.sha }} .
+          IMAGE_NAME_LC=$(echo "${IMAGE_NAME}" | tr '[:upper:]' '[:lower:]')
+          docker build -t ${IMAGE_NAME_LC}:${{ github.sha }} .
 
       - name: Scan image for vulnerabilities
-        uses: aquasecurity/trivy-action@0.24.0
-        with:
-          image-ref: ghcr.io/${{ github.repository_owner }}/branch-loan-api:${{ github.sha }}
-          severity: CRITICAL
-          exit-code: 1
+        run: |
+          IMAGE_NAME_LC=$(echo "ghcr.io/${{ github.repository_owner }}/branch-loan-api" | tr '[:upper:]' '[:lower:]')
+          trivy image --severity CRITICAL --exit-code 1 ${IMAGE_NAME_LC}:${{ github.sha }}
 
       - name: Push Docker image
         if: github.event_name == 'push'
         run: |
-          docker push ghcr.io/${{ github.repository_owner }}/branch-loan-api:${{ github.sha }}
+          IMAGE_NAME_LC=$(echo "${IMAGE_NAME}" | tr '[:upper:]' '[:lower:]')
+          docker push ${IMAGE_NAME_LC}:${{ github.sha }}
