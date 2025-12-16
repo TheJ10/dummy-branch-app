@@ -3,7 +3,7 @@ name: CI - Branch Loan API
 on:
   push:
     branches: ["main"]
-  pull_requests:
+  pull_request:
 
 jobs:
   build-test-scan-push:
