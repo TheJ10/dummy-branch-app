@@ -261,3 +261,9 @@ This project demonstrates:
 - **Multi-environment configuration** 
 - **Automated CI/CD with security scanning** 
 - **Clear, reproducible documentation**
+
+---
+
+## Author
+Jaspal Gundla
+
